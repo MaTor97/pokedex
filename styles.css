@@ -1,67 +1,61 @@
 * {
     margin: 0;
     box-sizing: border-box;
-    padding: 10px;
     font-family: monospace;
+
 }
 
 body {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
 
     main {
-        width: 45%;
-        font-family: Arial; 
-        margin-top: 20px;
-        border: 2px solid black;
-        background-color: red;
         text-align: center;
+        border-radius: 10%;
+        border: 3px solid black;
+        overflow: hidden;
 
         #profile {
-            display: flex;
-            justify-content: space-between;
-
             #image-type {
-                width: 300px; 
-                height: auto;
-                background-color: #168b1c;
-                border: 1px solid black;
-                text-align: center;
-
                 img {
-                    width: 250px; 
+                    width: 400px;
                     height: auto;
-                    background-color: #168b1c;
-                } 
-            }  
-
-            #text {
-                width: 300px;
-                border: 1px solid black;
-                background-color: #114b14;
-                font-size: 16px;
-
-                #locations {
-                    border: 1px solid black;
-                    background-color: #168b1c;
-                    font-size: 14px;
-                    overflow: auto;
-                    overflow-y: scroll;
-                    scrollbar-width: none;
-                    max-height: 200px;
-                    margin-bottom: 10px;
                 }
 
-                #widthNheight {
-                    border: 1px solid black;
-                    background-color: #168b1c;
-                    font-size: 14px;
+                #data {
+                    padding: 10px 0;
+                    background-color: rgba(15, 17, 19, 0.418);
+
+                    font-size: 20px;
+
+                    #assets {
+                        padding: 10px;
+                        display: flex;
+                        width: 100%;
+                        background-color: rgba(240, 248, 255, 0.418);
+                        margin: 10px 0;
+                        justify-content: space-around;
+                    }
+                }
+            }
+
+            #text {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+
+                #locations {
+                    width: 400px;
+                    max-height: 150px;
+                    overflow: scroll;
+                    scrollbar-width: none;   
                 }
             }
         }
-
-        
     }
 }
-
