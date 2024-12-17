@@ -56,13 +56,17 @@ async function getPokemonDetails(pokemonName) {
             </div>
             <div id='text'>
                 <strong>Locations:</strong>
-                <p> ${locations.length > 0 ? locations.join(", ") : "Unknown"}</p>
-                <p><strong>Weight:</strong> ${weight} kg</p>
-                <p><strong>Height:</strong> ${height} m</p>
+                <div id='locations'>                  
+                    <p> ${locations.length > 0 ? locations.join(", ") : "Unknown"}</p>
+                </div>
+                <div id='widthNheight'>
+                    <p><strong>Weight:</strong> ${weight} kg</p>
+                    <p><strong>Height:</strong> ${height} m</p>
+                </div>
             </div>
           </div>
-          <div id='locations'>
-            <strong>${pokemonName.toUpperCase()}:</strong>
+          <div id='description'>
+            <strong>${pokemonData.name.toUpperCase()}:</strong>
             <p> ${description}</p>
           </div>
           <audio controls>
@@ -76,5 +80,5 @@ async function getPokemonDetails(pokemonName) {
     }
   }
   
-  getPokemonDetails("bulbasaur");
+  getPokemonDetails("400");
   
