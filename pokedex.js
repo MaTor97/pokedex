@@ -3,6 +3,9 @@ async function getPokemonDetails(pokemonName) {
       // Récupère les données générales
       const pokemonResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
       const pokemonData = await pokemonResponse.json();
+      const pokemonId = pokemonData.id
+      console.log(pokemonData)
+      console.log(pokemonId)
       
       // Récupère les données de l'espèce
       const speciesResponse = await fetch(pokemonData.species.url);
@@ -11,16 +14,23 @@ async function getPokemonDetails(pokemonName) {
       // Récupère les endroits où trouver le Pokémon
       const encountersResponse = await fetch(pokemonData.location_area_encounters);
       const encountersData = await encountersResponse.json();
-  
+    
       // Poids et taille
       const weight = pokemonData.weight / 10; // en kg
       const height = pokemonData.height / 10; // en m
-  
+
+      // Type
+      const pokemonType = []
+      pokemonData.types.forEach(index => {
+        pokemonType.push(index.type.name)
+      });
+      
+      console.log(`Pokemon Types: ${pokemonType}`)
       // Description
       const description = speciesData.flavor_text_entries.find(entry => entry.language.name === "en").flavor_text;
   
       // Cri
-      const cryUrl = `https://play.pokemonshowdown.com/audio/cries/${pokemonName}.mp3`;
+      const cryUrl = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${pokemonId}.ogg`;
   
       // Localisations
       const locations = encountersData.map(encounter => encounter.location_area.name);
@@ -38,23 +48,33 @@ async function getPokemonDetails(pokemonName) {
   
       // Affichage dans la page
       document.body.innerHTML = `
-        <div style="text-align: center; font-family: Arial; margin-top: 20px;">
-          <h1>${pokemonName.toUpperCase()}</h1>
-          <img src="${imageUrl}" alt="${pokemonName}" style="width: 200px; height: auto;" />
-          <p><strong>Weight:</strong> ${weight} kg</p>
-          <p><strong>Height:</strong> ${height} m</p>
-          <p><strong>Description:</strong> ${description}</p>
-          <p><strong>Locations:</strong> ${locations.length > 0 ? locations.join(", ") : "Unknown"}</p>
+        <main>
+          <div id='profile'>
+            <div id='image-type'>
+                <img src="${imageUrl}" alt="${pokemonName}"/>
+                <p> ${pokemonType} </p>
+            </div>
+            <div id='text'>
+                <strong>Locations:</strong>
+                <p> ${locations.length > 0 ? locations.join(", ") : "Unknown"}</p>
+                <p><strong>Weight:</strong> ${weight} kg</p>
+                <p><strong>Height:</strong> ${height} m</p>
+            </div>
+          </div>
+          <div id='locations'>
+            <strong>${pokemonName.toUpperCase()}:</strong>
+            <p> ${description}</p>
+          </div>
           <audio controls>
             <source src="${cryUrl}" type="audio/mpeg" />
             Your browser does not support the audio element.
           </audio>
-        </div>
+        </main>
       `;
     } catch (error) {
       console.error('Error fetching Pokémon details:', error);
     }
   }
   
-  getPokemonDetails('bulbasaur');
+  getPokemonDetails("bulbasaur");
   
