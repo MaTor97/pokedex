@@ -1,6 +1,6 @@
 import { Outlet, Link } from "react-router-dom";
 import Input from "../Input"
-import Display from "./Display"
+//import Display from "../Display"
 
 const Layout = () => {
 
