@@ -2,7 +2,16 @@ import { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 function Display(props) {
-  props.pokemons;
+  const pokemonList = props.pokemons;
+  const [display, setDisplay] = useState([pokemonList.slice(0,16)])
+  const [row, setRow] = useState(3)
+
+  const fetchData = () => {
+    const nextLine = pokemonList.slice( (row * 4) , (row * 4 + 4) )  // get the line to add
+    setDisplay((display) => [...display, ...nextLine]) // add the line in display
+    setPage(page + 1)
+  }
+
 
   return (
     <div className="display">
@@ -26,7 +35,9 @@ function Display(props) {
         releaseToRefreshContent={
           <h3 style={{ textAlign: "center" }}>&#8593; Release to refresh</h3>
         }
+        className="display-grid"
       >
+
         {items}
       </InfiniteScroll>
     </div>
