@@ -15,4 +15,4 @@ const Layout = () => {
 };
 
 export default Layout;
-//<Link to="/pokemon">Pokemon</Link>
+''

@@ -6,7 +6,7 @@ function Display(props) {
   const pokemonList = props.pokemonList;
   const [display, setDisplay] = useState([...pokemonList.slice(0,16)])
   const [row, setRow] = useState(4)
-  console.log(display)
+  console.log(`Display: ${display}`)
 
   const fetchData = () => {
     const nextLine = pokemonList.slice( (row * 4) , (row * 4 + 4) )  // get the line to add
@@ -32,7 +32,7 @@ function Display(props) {
         className="display-grid"
       >
         {display.map((pokemon) => (
-          <div key={pokemon.id}>
+          <div key={pokemon.index}>
             <p> {pokemon.name} </p>
           </div>
         
