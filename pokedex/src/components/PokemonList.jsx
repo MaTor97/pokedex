@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 export default function PokemonList() {
     const [pokemonList, setPokemonList] = useState([]);
 
-    useEffect(() => {
+
         const fetchPokemonList = async () => {
             try {
                 const response = await fetch("https://pokeapi.co/api/v2/pokemon/?limit=1025");
@@ -19,18 +19,7 @@ export default function PokemonList() {
         };
 
         fetchPokemonList();
-    }, []);
 
-    return (
-        <div>
-            <h3>Pokémon List</h3>
-            <ul>
-                {pokemonList.map((pokemon, index) => (
-                    <li key={index}>
-                        {pokemon.name}
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
+    return pokemonList;
+    ;
 }
