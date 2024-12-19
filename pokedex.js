@@ -26,6 +26,8 @@ async function getPokemonDetails(pokemonName) {
     const pokemonData = await pokemonResponse.json();
     const pokemonId = pokemonData.id;
 
+    console.log(pokemonData)
+
     // Poids et taille
     const weight = pokemonData.weight / 10; // en kg
     const height = pokemonData.height / 10; // en m
@@ -40,43 +42,51 @@ async function getPokemonDetails(pokemonName) {
     const typeColors = pokemonType.map(type => pokemonTypes[type]);
     const backgroundStyle =
       typeColors.length === 1
-        ? `background: linear-gradient(45deg, rgb(0 0 0/20%),rgb(255 255 255/30%)), ${typeColors[0]};`
-        : `background: linear-gradient(45deg, ${typeColors.join(", ")});`;
+        ? `background: radial-gradient(rgb(0 0 0/20%),rgb(255 255 255/30%)), ${typeColors[0]};`
+        : `background: radial-gradient(${typeColors.join(", ")});`;
 
     // Cri
     const cryUrl = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${pokemonId}.ogg`;
-
+ 
     // Image (sprite par défaut)
-    const imageUrl = pokemonData.sprites.front_default;
+    const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonId}.png
+`;
 
     // Affichage dans la page
     document.body.innerHTML = `
       <main style="${backgroundStyle}">
         <div id='profile'>
           <div id='image-type'>
-            <img src="${imageUrl}" alt="${pokemonName}" />
-            <div id='data'>
-              <p><strong>${pokemonData.name.toUpperCase()}</strong></p>
             <div id='assets'>
-              <p><strong>Weight</strong></br> ${weight} kg</p>
-              ${pokemonType
-                .map(
-                  type => `
-                  <div style="background-color: ${pokemonTypes[type]}; color: white; padding: 5px; border-radius: 5px; margin-top: 5px; border : 1px solid black;">
-                    ${type.toUpperCase()}
-                  </div>`
-                )
-                .join("")}
-                <p><strong>Height</strong></br> ${height} m</p>
+              <div id='name' >
+                <p id='one'><strong>${pokemonData.name.toUpperCase()}</strong></p>
               </div>
-              <audio controls>
-                <source src="${cryUrl}" type="audio/mpeg" />
-                  Your browser does not support the audio element.
-              </audio>
+              <p><strong>Weight:</strong> ${weight} kg</p>
+              <p><strong>Height:</strong> ${height} m</p>
+                <div id='types'>
+                ${pokemonType
+                  .map(
+                    type => `
+                    <div style="background-color: ${pokemonTypes[type]}; color: white; padding: 2px 8px; border-radius: 5px; margin: 10px 0; border : 1px solid black;">
+                      ${type.toUpperCase()}
+                    </div>`
+                  )
+                  .join("")}
+                </div>
+                
+                <audio controls>
+                  <source src="${cryUrl}" type="audio/mpeg" />
+                    Your browser does not support the audio element.
+                </audio>
+              </div>              
+              <img src="${imageUrl}" alt="${pokemonName}" />
+
             </div>
           </div>
+            <div id='data'>
+                
+            </div>
         </div>
-        
       </main>
     `;
   } catch (error) {
@@ -84,4 +94,31 @@ async function getPokemonDetails(pokemonName) {
   }
 }
 
-getPokemonDetails("60");
+async function getPokemonEvolution(pokemonId) {
+  // Récupère les informations du Pokémon
+  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
+  const data = await response.json();
+  
+  // Récupère l'URL de la chaîne d'évolution
+  const evolutionResponse = await fetch(data.species.url);
+  const evolutionData = await evolutionResponse.json();
+  
+  // Récupère l'URL de la chaîne d'évolution
+  const evolutionChainResponse = await fetch(evolutionData.evolution_chain.url);
+  const evolutionChain = await evolutionChainResponse.json();
+  
+  // Affiche la chaîne d'évolution
+  console.log('Chain d\'évolution: ', evolutionChain);
+  
+  // Exemple de récupération de l'évolution
+  let chain = evolutionChain.chain;
+  while (chain) {
+    console.log('Évolution:', chain.species.name);
+    chain = chain.evolves_to[0];  // Passe à la prochaine évolution (s'il y en a une)
+  }
+}
+
+
+
+
+getPokemonDetails("27");
