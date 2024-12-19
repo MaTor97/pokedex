@@ -24,13 +24,11 @@ export default function PokemonList() {
     return (
         <div>
             <h3>Pokémon List</h3>
-            <ul>
-                {pokemonList.map((pokemon, index) => (
-                    <li key={index}>
-                        {pokemon.name}
-                    </li>
-                ))}
-            </ul>
+            {pokemonList.length > 0 ? (
+                <p>{pokemonList[0].name}</p> // Affiche le nom du premier Pokémon
+            ) : (
+                <p>Loading...</p> // Affiche un message de chargement jusqu'à ce que la liste soit récupérée
+            )}
         </div>
     );
 }
