@@ -1,41 +1,36 @@
 import { useEffect, useState } from "react";
 
-export default function PokemonList(){
-    const [pokemonList, setPokemonList] = useState([])
-    
+export default function PokemonList() {
+    const [pokemonList, setPokemonList] = useState([]);
+
     useEffect(() => {
         const fetchPokemonList = async () => {
-            let pokemon = {
-                name,
-                url
-            }
-            try{
-                const response = await fetch("https://pokeapi.co/api/v2/pokemon/?limit=1025")
+            try {
+                const response = await fetch("https://pokeapi.co/api/v2/pokemon/?limit=1025");
                 const data = await response.json();
-                const pokemonData = await Promise.all(
-                  data.results.map(
-                    async (pokemon) => {
-                        return {
-                            name: pokemon.name,
-                            url: pokemon.url
-                        }
-                    }
-                  )  
-                )
+                const pokemonData = data.results.map(pokemon => ({
+                    name: pokemon.name,
+                    url: pokemon.url
+                }));
                 setPokemonList(pokemonData);
-            } catch(error){
-                console.error("error fetch pokemonList: " + error)
+            } catch (error) {
+                console.error("Error fetching Pokémon list: ", error);
             }
-            fetchPokemonList();
-        }
-        
-    },[]);
+        };
 
-    console.log("compo " + pokemonList)
-    
+        fetchPokemonList();
+    }, []);
+
     return (
-        <>
-            <h3>Name: {pokemonList.name}</h3>
-        </>
-    )
+        <div>
+            <h3>Pokémon List</h3>
+            <ul>
+                {pokemonList.map((pokemon, index) => (
+                    <li key={index}>
+                        {pokemon.name}
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
 }
