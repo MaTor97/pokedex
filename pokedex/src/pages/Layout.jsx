@@ -1,14 +1,14 @@
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useLoaderData } from "react-router-dom";
 import Input from "../components/Input"
 import Display from "../components/Display"
 
-const Layout = (props) => {
-  console.log("layout " + props.pokemonList)
+const Layout = () => {
+  const pokemonList = useLoaderData();
   return (
     <>
       <Input/>
       
-      <Display pokemonList={props.pokemonList} />
+      <Display pokemonList={pokemonList}/>
       <Outlet />
     </>
   )
