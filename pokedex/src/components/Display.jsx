@@ -2,6 +2,7 @@ import { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 function Display(props) {
+  console.log("display" + props.pokemonList)
   const pokemonList = props.pokemonList;
   const [display, setDisplay] = useState([pokemonList.slice(0,16)])
   const [row, setRow] = useState(3)

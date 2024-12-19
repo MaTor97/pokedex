@@ -5,47 +5,16 @@ import Layout from "./pages/Layout";
 import Home from "./pages/Home";
 import Pokemon from "./pages/Pokemon"
 import NoPage from "./pages/NoPage.jsx";
+import PokemonList from "./components/PokemonList.jsx";
 
 function App() {
-  const [pokemonList, setPokemonList] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
-
-  useEffect(() => {
-
-    async function grabData(){
-      setIsLoading(true)
-      console.log("2")
-      let response = await fetch(`https://pokeapi.co/api/v2/pokemon/?limit=1025`)
-      let pokemonData = await response.json();
-      setPokemonList(pokemonData.results)
-      setIsLoading(false)
-      console.log("3")
-    }
-    grabData();
-  }, [])
-  /*const fetchData = () => {
-  const fetchPokemon = async () => {
-    console.log("test")
-    let pokemonList;
-    try {
-      const pokemonData = await fetch(`https://pokeapi.co/api/v2/pokemon/?limit=1025`);
-      pokemonList = await pokemonData.json();
-      setPokemonList(()=> pokemonList.results)
-    } catch (error) {
-      console.error("fetchPokemon Failed")
-      }
-  }
-    fetchPokemon();
-  }
-  fetchData();
-  console.log(pokemonList)*/
-  
-
+    // const pokemonList = PokemonList();
+    // console.log("app : " + pokemonList)
     return (
     <>
-      {isLoading && <h2>Loading Data...</h2>}
-      {!isLoading &&
-      <BrowserRouter>
+    <PokemonList />
+    
+      {/* <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />} pokemonList={pokemonList} >
           <Route index element={<Home />} />
@@ -53,12 +22,13 @@ function App() {
           <Route path="*" element={<NoPage />} />
         </Route>
       </Routes>
-    </BrowserRouter>
-    }
+    </BrowserRouter> */}
     </>
   )}
 
 export default App
+
+
 
 
 /*
