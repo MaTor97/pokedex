@@ -1,6 +1,7 @@
 import { useState } from "react";
 import submitBall from '../asset/submitBall.png';
 import submitBallHover from '../asset/submitBallHover.png';
+import pokheader from '../asset/pokheader.png'
 
 function SearchInput(props) {  
     let todos = props.todos;
@@ -25,24 +26,32 @@ function SearchInput(props) {
 
     return (
         <div className="input-div">
-            <h1>Pokemon</h1>
-            <div id="search">
-                <input 
-                    type="text" 
-                    id="todo" 
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)} 
-                    name="todo" 
-                    placeholder="Gotta catch 'em all..." 
-                />
-                <br />
-                <button 
-                    onClick={handleAddTodos} 
-                    onMouseEnter={handleMouseEnter}  // Applique le survol
-                    onMouseLeave={handleMouseLeave}  // Applique la sortie du survol
-                >
-                    <img src={buttonImage} alt="Submit" />
-                </button>
+            <div id="left">
+                
+            </div>
+            <div id="middle">
+                <h1>Pokemon</h1>
+                <div id="search">
+                    <input 
+                        type="text" 
+                        id="todo" 
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)} 
+                        name="todo" 
+                        placeholder="Gotta catch 'em all..." 
+                    />
+                    <br />
+                    <button 
+                        onClick={handleAddTodos} 
+                        onMouseEnter={handleMouseEnter}  // Applique le survol
+                        onMouseLeave={handleMouseLeave}  // Applique la sortie du survol
+                    >
+                        <img src={buttonImage} alt="Submit" />
+                    </button>
+                </div>
+            </div>
+            <div id="right">
+                <img src={pokheader} />
             </div>
         </div>
     );
