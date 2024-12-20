@@ -52,6 +52,11 @@ body {
             position: absolute;
                     top: -70px;
                     left: 600px;
+            transition: scale 0.4s;
+        }
+
+        h1:hover {
+            scale: 1.2;
         }
     
         #search {
@@ -75,6 +80,7 @@ body {
                 border: none;
                 border-radius: 15px;
                 background-color: #3b4cca00;
+                cursor: pointer;
     
                 img {
                     height: 30px;
@@ -97,6 +103,10 @@ body {
             box-shadow: inset 12px 12px 2px 1px rgba(0, 0, 0, 0.2);
         }
     }
+}
+
+.input-div:hover {
+    cursor: url('./asset/masterball.png'), auto;
 }
 
 .display-grid {
