@@ -1,6 +1,6 @@
 import { useState, useLayoutEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import pokeballImage from '../asset/pokeball.png';
+import shiny from '../asset/shiny.png';
 
 function Display(props) {
   const toLoad = 5;
@@ -103,7 +103,7 @@ function Display(props) {
           <div key={pokemon.id}>
             <img
               id="imgOne"
-              src={pokeballImage}
+              src={shiny}
               alt="Pokeball"
               onClick={() => toggleImage(pokemon.id)}
             />
