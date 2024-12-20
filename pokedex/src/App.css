@@ -101,7 +101,7 @@ body {
 
 .display-grid {
     display: grid; 
-    grid-template-columns: repeat(5, 1fr); 
+    grid-template-columns: repeat(4, 1fr); 
     gap: 20px; 
     justify-items: center; 
     align-items: start;
@@ -116,7 +116,7 @@ body {
         overflow: hidden;
         margin: 20px;
         box-shadow: 12px 12px 2px 1px rgba(0, 0, 0, 0.2);
-        transition: all 0.3s;
+        transition: all 0.7s;
         border: 8px double white;
 
         #imgOne {
