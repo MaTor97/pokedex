@@ -13,6 +13,8 @@ body {
     justify-content: center;
     align-items: center;
     font-family: "PokemonClassic", sans-serif;
+    margin: 0;
+    background: radial-gradient(rgb(102, 102, 102), black);
 }
 
 #root {
@@ -26,7 +28,7 @@ body {
     flex-direction: column;
     background-image: url("./asset/background.jpg");
     width: 100%;
-    border-bottom: 1px solid white;
+    border-bottom: 3px double white;
 
     h1 {
         font-family: "PokemonSolid", sans-serif;
@@ -39,15 +41,26 @@ body {
     #search {
         display: flex;
         margin: 20px;
+        background: radial-gradient(rgb(155, 153, 153), #424242);
+        border-radius: 20px;
+        border: 3px double white;
 
         input {
-            margin: 20px;
+            margin: 20px 10px;
             height: 30px;
             width: 400px;
+            border-radius: 20px;
+
         }
 
         button {
+            border: none;
+            border-radius: 15px;
+            background-color: #3b4cca00;
 
+            img {
+                height: 30px;
+            }
         }
     }
 }
@@ -58,7 +71,6 @@ body {
     gap: 20px; 
     justify-items: center; 
     align-items: start;
-
     
     div {
         border-radius: 15px;
@@ -68,6 +80,7 @@ body {
         height: 380px;
         overflow: hidden;
         margin: 20px;
+        box-shadow: 12px 12px 2px 1px rgba(0, 0, 0, 0.2);
 
         #imgOne {
             position: relative;
@@ -94,5 +107,9 @@ body {
                 font-size: 12px;
             }
         }
+    }
+
+    div:hover {
+        background-color: rgb(235, 235, 235);
     }
 }

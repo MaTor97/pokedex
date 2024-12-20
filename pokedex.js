@@ -132,4 +132,4 @@ async function getPokemonDetails(pokemonName) {
 
 
 
-getPokemonDetails("3");
+getPokemonDetails("725");
