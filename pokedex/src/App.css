@@ -3,11 +3,53 @@
     src: url("./asset/fonts/pokemon-classic/Pokemon Classic.ttf") format("truetype");
 }
 
+@font-face {
+    font-family: "PokemonSolid";
+    src: url("./asset/fonts/pokemon/Pokemon Solid.ttf") format("truetype");
+}
+
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: "PokemonClassic", sans-serif;
+}
+
+#root {
+    width: 100%;
+}
+
+.input-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-image: url("./asset/background.jpg");
+    width: 100%;
+    border-bottom: 1px solid white;
+
+    h1 {
+        font-family: "PokemonSolid", sans-serif;
+        color: #FFDE00; /* Couleur du texte */
+        -webkit-text-stroke: 4px #3B4CCA; 
+        font-size: 56px;
+        margin: 20px;
+    }
+
+    #search {
+        display: flex;
+        margin: 20px;
+
+        input {
+            margin: 20px;
+            height: 30px;
+            width: 400px;
+        }
+
+        button {
+
+        }
+    }
 }
 
 .display-grid {

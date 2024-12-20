@@ -11,11 +11,14 @@ function SearchInput(props){
     }
     return(
             <div className="input-div">
-                <input type="text" id="todo" 
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                    name="todo" placeholder="Type a new todo"></input><br></br>
-                <button onClick={handleAddTodos}>Add Todo</button>
+                <h1>Pokemon</h1>
+                <div id='search'>
+                    <input type="text" id="todo" 
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                        name="todo" placeholder="gotta catch em all.."></input><br></br>
+                    <button onClick={handleAddTodos}>catch him!</button>
+                </div>
             </div>
     )
 }
