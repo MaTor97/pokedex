@@ -1,58 +1,55 @@
-import { useEffect, useState, useLayoutEffect } from "react";
+import { useState, useLayoutEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import pokeballImage from '../asset/pokeball.png';
 
 function Display(props) {
-
- const toLoad = 5;
+  const toLoad = 5;
   const pokemonList = props.pokemonList;
-  const [display, setDisplay] = useState([])
-  const [row, setRow] = useState(toLoad)
-  const [nextLine, setNextLine] = useState([])
+  const [display, setDisplay] = useState([]);
+  const [row, setRow] = useState(toLoad);
+  const [nextLine, setNextLine] = useState([]);
+  const [currentImage, setCurrentImage] = useState({});
 
   useLayoutEffect(() => {
-    const asyncLoad = async ()=> {
-     const toDisplay = pokemonList.slice(0, toLoad*row)
-     .map((pokemon) => fetch(pokemon.url).then(response => response.json()))
-      
-    
-      const syncToDisplay = await Promise.all(toDisplay)
-      setDisplay(syncToDisplay)
-  
-      const toNextLine = pokemonList.slice(row*toLoad, row*toLoad + toLoad)
-      .map((pokemon) =>fetch(pokemon.url).then(response => response.json()))
-    
-    const syncToNextLine = await Promise.all(toNextLine)
-    setNextLine(syncToNextLine)
-    }
- asyncLoad();
-      
+    const asyncLoad = async () => {
+      const toDisplay = pokemonList
+        .slice(0, toLoad * row)
+        .map((pokemon) => fetch(pokemon.url).then((response) => response.json()));
 
-  },[pokemonList])
+      const syncToDisplay = await Promise.all(toDisplay);
+      setDisplay(syncToDisplay);
 
-  useLayoutEffect( () => {    
+      const toNextLine = pokemonList
+        .slice(row * toLoad, row * toLoad + toLoad)
+        .map((pokemon) => fetch(pokemon.url).then((response) => response.json()));
 
-    setNextLine([])
-    const asyncLoad = async ()=> {
-      const toNextLine = pokemonList.slice(row*toLoad, row*toLoad + toLoad)
-      .map((pokemon) =>fetch(pokemon.url).then(response => response.json()))
-    
-    const syncToNextLine = await Promise.all(toNextLine)
-    setNextLine(syncToNextLine)
-  }
-  asyncLoad();
-  },[row])
+      const syncToNextLine = await Promise.all(toNextLine);
+      setNextLine(syncToNextLine);
+    };
+    asyncLoad();
+  }, [pokemonList]);
+
+  const toggleImage = (pokemonID) => {
+    setCurrentImage((prevState) => ({
+      ...prevState,
+      [pokemonID]: prevState[pokemonID] === shinyImgUrl(pokemonID)
+        ? imgUrl(pokemonID)
+        : shinyImgUrl(pokemonID),
+    }));
+  };
 
   const fetchData = () => {
- //   const nextLine = pokemonList.slice( (row * 4) , (row * 4 + 4) )  // get the line to add
-    setDisplay((display) => [...display, ...nextLine]) // add the line in display
-    setRow(row + 1)
+    setDisplay((display) => [...display, ...nextLine]); // add the line in display
+    setRow(row + 1);
 
     return display;
-  }
+  };
 
-  function imgUrl(pokemonID){
-    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonID}.png`
-  }
+  const imgUrl = (pokemonID) =>
+    `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonID}.png`;
+
+  const shinyImgUrl = (pokemonID) =>
+    `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/${pokemonID}.png`;
 
   const pokemonTypes = {
     normal: "#A8A77A",
@@ -72,23 +69,28 @@ function Display(props) {
     dragon: "#6F35FC",
     dark: "#705746",
     steel: "#B7B7CE",
-    fairy: "#D685AD"
+    fairy: "#D685AD",
   };
 
   const getTypeStyle = (types) => {
     const typeColors = types.map((t) => pokemonTypes[t.type.name]);
     return typeColors.length === 1
-      ? { background: `radial-gradient(circle, ${typeColors[0]}, #fff)` }
+      ? { background: `radial-gradient(circle, #fff, ${typeColors[0]} )` }
       : { background: `radial-gradient(circle, ${typeColors.join(", ")})` };
   };
-  
+
+  const getTypeColor = (type) => {
+    return {
+      backgroundColor: pokemonTypes[type],
+    };
+  };
 
   return (
     <div className="display">
       <InfiniteScroll
         dataLength={display.length}
         next={fetchData}
-        hasMore={row * 4 < pokemonList.length} // Condition pour arrêter le scroll infini
+        hasMore={row * 4 < pokemonList.length}
         loader={<h4>Loading...</h4>}
         endMessage={
           <p style={{ textAlign: "center" }}>
@@ -98,11 +100,27 @@ function Display(props) {
         className="display-grid"
       >
         {display.map((pokemon) => (
-          <div key={pokemon.id} >
-            <p> {pokemon.name} {pokemon.id} </p>
-            <img src={imgUrl(pokemon.id)} alt={pokemon.name} style={
-              getTypeStyle(pokemon.types)
-            }></img>
+          <div key={pokemon.id}>
+            <img
+              id="imgOne"
+              src={pokeballImage}
+              alt="Pokeball"
+              onClick={() => toggleImage(pokemon.id)}
+            />
+            <img
+              id="imgTwo"
+              src={currentImage[pokemon.id] || imgUrl(pokemon.id)}
+              alt={pokemon.name}
+              style={getTypeStyle(pokemon.types)}
+            />
+            <p>{pokemon.name.toUpperCase()}</p>
+            <div id="types">
+              {pokemon.types.map((typeObj, index) => (
+                <p key={index} style={getTypeColor(typeObj.type.name)}>
+                  {typeObj.type.name}
+                </p>
+              ))}
+            </div>
           </div>
         ))}
       </InfiniteScroll>
@@ -111,3 +129,4 @@ function Display(props) {
 }
 
 export default Display;
+
