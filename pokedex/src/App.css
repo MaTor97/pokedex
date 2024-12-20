@@ -11,6 +11,11 @@ body {
 }
 
 .display-grid {
+    display: grid; 
+    grid-template-columns: repeat(5, 1fr); 
+    gap: 20px; 
+    justify-items: center; 
+    align-items: start;
 
     
     div {
@@ -18,6 +23,7 @@ body {
         text-align: center;
         background-color: rgba(255, 255, 255, 0.644);
         width: 200px;
+        height: 380px;
         overflow: hidden;
         margin: 20px;
 
@@ -38,7 +44,7 @@ body {
         }
 
         #types {
-            
+            height: 75px;
 
             p {
                 width: 80%;
