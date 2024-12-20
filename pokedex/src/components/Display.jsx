@@ -1,51 +1,59 @@
-import { useLayoutEffect,useState } from "react";
+import { useEffect, useState, useLayoutEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 function Display(props) {
-  const toLoad = 4;
+
+ const toLoad = 5;
   const pokemonList = props.pokemonList;
-  const [display, setDisplay] = useState([]);
-  const [row, setRow] = useState(0);
+  const [display, setDisplay] = useState([])
+  const [row, setRow] = useState(toLoad)
+  const [nextLine, setNextLine] = useState([])
 
   useLayoutEffect(() => {
-    // Charger les premiers éléments
-    const initialLoad = async () => {
-      const fetchPromises = pokemonList
-        .slice(0, toLoad * 5) // Charger les 20 premiers éléments
-        .map((pokemon) => fetch(pokemon.url).then((response) => response.json()));
+    const asyncLoad = async ()=> {
+     const toDisplay = pokemonList.slice(0, toLoad*row)
+     .map((pokemon) => fetch(pokemon.url).then(response => response.json()))
+      
+    
+      const syncToDisplay = await Promise.all(toDisplay)
+      setDisplay(syncToDisplay)
+  
+      const toNextLine = pokemonList.slice(row*toLoad, row*toLoad + toLoad)
+      .map((pokemon) =>fetch(pokemon.url).then(response => response.json()))
+    
+    const syncToNextLine = await Promise.all(toNextLine)
+    setNextLine(syncToNextLine)
+    }
+ asyncLoad();
+      
 
-      const fetchedData = await Promise.all(fetchPromises);
-      setDisplay(fetchedData);
-    };
+  },[pokemonList])
 
-    initialLoad();
-  }, [pokemonList]);
+  useLayoutEffect( () => {    
 
+    setNextLine([])
+    const asyncLoad = async ()=> {
+      const toNextLine = pokemonList.slice(row*toLoad, row*toLoad + toLoad)
+      .map((pokemon) =>fetch(pokemon.url).then(response => response.json()))
+    
+    const syncToNextLine = await Promise.all(toNextLine)
+    setNextLine(syncToNextLine)
+  }
+  asyncLoad();
+  },[row])
 
-  const fetchData = async () => {
-    // Charger la ligne suivante
-    const nextBatch = pokemonList
-      .slice(row * 4, (row + 1) * 4)
-      .map((pokemon) => fetch(pokemon.url).then((response) => response.json()));
+  const fetchData = () => {
+ //   const nextLine = pokemonList.slice( (row * 4) , (row * 4 + 4) )  // get the line to add
+    setDisplay((display) => [...display, ...nextLine]) // add the line in display
+    setRow(row + 1)
 
-    const fetchedData = await Promise.all(nextBatch);
-    setDisplay((prevDisplay) => [...prevDisplay, ...fetchedData]);
-    setRow(row + 1);
-  };
+    return display;
+  }
 
-  const pokemonType = [];
-    .types.forEach(index => {
-      pokemonType.push(index.type.name);
-    });
+  function imgUrl(pokemonID){
+    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonID}.png`
+  }
 
-  const typeColors = pokemonType.map(type => pokemonTypes[type]);
-  const backgroundStyle =
-      typeColors.length === 1
-        ? `background: radial-gradient(rgb(0 0 0/20%),rgb(255 255 255/30%)), ${typeColors[0]};`
-        : `background: radial-gradient(${typeColors.join(", ")});`;
-
-  const imgUrl = (pokemonID) =>
-    `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonID}.png`;
 
   return (
     <div className="display">
@@ -61,10 +69,10 @@ function Display(props) {
         }
         className="display-grid"
       >
-        {display.map((pokemon, index) => (
-          <div key={index}>
-            <p>{pokemon.id}{pokemon.name}</p>
-            <img src={imgUrl(pokemon.id)} alt={pokemon.name} style={backgroundStyle}></img>
+        {display.map((pokemon) => (
+          <div key={pokemon.id} >
+            <p> {pokemon.name} {pokemon.id} </p>
+            
           </div>
         ))}
       </InfiniteScroll>
