@@ -128,10 +128,16 @@ body {
             position: relative;
             right: -80px;
             top: 20px;
+            padding: 2px;
+            border-radius: 50%;
+            transition: all 0.1s;
+            border: 3px double rgba(255, 255, 255, 0.644);
         }
 
         #imgOne:hover {
             cursor: pointer;
+            border: 3px double black;
+            background-color: #0e175a;
         }
 
         #imgTwo {
@@ -155,6 +161,6 @@ body {
 
     div:hover {
         background-color: rgb(235, 235, 235);
-        transform: translateY(-20px);
+        scale: 1.05;
     }
 }
