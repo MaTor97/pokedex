@@ -73,6 +73,7 @@ body {
                 height: 30px;
                 width: 400px;
                 border-radius: 20px;
+                padding-left: 20px;
             }
     
             button {
@@ -137,7 +138,7 @@ body {
         #imgOne:hover {
             cursor: pointer;
             border: 3px double black;
-            background-color: #0e175a;
+            background-color: #ffffff;
         }
 
         #imgTwo {
@@ -160,7 +161,6 @@ body {
     }
 
     div:hover {
-        background-color: rgb(235, 235, 235);
-        scale: 1.05;
+        scale: 1.04;
     }
 }
