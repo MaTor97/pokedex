@@ -1,9 +1,10 @@
 import { useState, useLayoutEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import shinyImg from '../asset/shiny.png';
+import { useNavigate } from 'react-router-dom';
 
 function Display(props) {
-
+  const navigate = useNavigate();
  const toLoad = 5;
   const pokemonList = props.pokemonList;
   const [display, setDisplay] = useState([])
@@ -102,6 +103,11 @@ function Display(props) {
       backgroundColor: pokemonTypes[type], // Couleur associée au type
     };
   };
+  const viewPokemon = (pokemon) => {
+    const id = pokemon.id;
+    navigate('/pokemon/' + id);
+  };
+
 
   return (
     <div className="display">
@@ -118,7 +124,7 @@ function Display(props) {
         className="display-grid"
       >
         {display.map((pokemon) => (
-          <div key={pokemon.id} >
+          <div key={pokemon.id} onClick={() => viewPokemon(pokemon)} >
             <img id='imgOne' src={shinyImg} onClick={() => toggleImage(pokemon.id)}/>
             <img id='imgTwo' src={currentImage[pokemon.id] || imgUrl(pokemon.id)} alt={pokemon.name} style={
               getTypeStyle(pokemon.types)
