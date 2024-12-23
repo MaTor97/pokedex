@@ -149,6 +149,10 @@ body {
             border-bottom: 3px solid rgb(4, 4, 39);
         }
 
+        #imgTwo:hover {
+            cursor: pointer;
+        }
+
         #types {
             height: 75px;
 
