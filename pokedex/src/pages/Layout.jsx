@@ -134,13 +134,13 @@ const Layout = () => {
               className="display-grid"
             >
               {display.map((pokemon) => (
-                <div key={pokemon.id} onClick={() => viewPokemon(pokemon)} >
+                <div key={pokemon.id}  >
                   <img id='imgOne' src={shinyImg} onClick={() => toggleImage(pokemon.id)}/>
-                  <img id='imgTwo' src={currentImage[pokemon.id] || imgUrl(pokemon.id)} alt={pokemon.name} style={
+                  <img id='imgTwo' onClick={() => viewPokemon(pokemon)} src={currentImage[pokemon.id] || imgUrl(pokemon.id)} alt={pokemon.name} style={
                     getTypeStyle(pokemon.types)
                   }></img>
-                  <p> {pokemon.name.toUpperCase()}</p>
-                  <div id="types">
+                  <p onClick={() => viewPokemon(pokemon)}>  {pokemon.name.toUpperCase()}</p>
+                  <div id="types" onClick={() => viewPokemon(pokemon)}>
                     {pokemon.types.map((typeObj, index) => (
                       <p key={index} style={getTypeColor(typeObj.type.name)}>
                         {typeObj.type.name}
