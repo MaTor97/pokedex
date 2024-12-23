@@ -111,10 +111,6 @@ const Layout = () => {
      const id = pokemon.id;
      navigate('/pokemon/' + id);
    };
- 
- 
-
-
 
   return (
     <>
