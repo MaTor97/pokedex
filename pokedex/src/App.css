@@ -48,16 +48,12 @@ body {
             font-family: "PokemonSolid", sans-serif;
             color: #FFDE00; 
             -webkit-text-stroke: 4px #3B4CCA; 
-            font-size: 56px;
+            font-size: 64px;
             position: absolute;
-                    top: -70px;
-                    left: 600px;
-            transition: scale 0.4s;
+                    top: -85px;
+                    left: 580px;
         }
 
-        h1:hover {
-            scale: 1.2;
-        }
     
         #search {
             display: flex;
@@ -310,7 +306,7 @@ body {
                     width: 22%;
                 }
             }
-          }  
+        }  
     } 
-  }
+}
   
