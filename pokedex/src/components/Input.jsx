@@ -1,28 +1,45 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import submitBall from '../asset/submitBall.png';
 import submitBallHover from '../asset/submitBallHover.png';
 import pokheader from '../asset/pokheader.png'
+import { useNavigate } from "react-router-dom";
 
 function SearchInput(props) {  
-    let todos = props.todos;
-    const addTodos = props.addTodos;
+    let pokemonList = props.pokemonList;
     const [inputValue, setInputValue] = useState("");
-    const [buttonImage, setButtonImage] = useState(submitBall);  // L'état pour gérer l'image du bouton
+    const [buttonImage, setButtonImage] = useState(submitBall);
+    const [filteredPokemon, setFilteredPokemon] = useState([]);
+    const navigate = useNavigate();
 
-    function handleAddTodos() {
-        addTodos(inputValue);
-        setInputValue("");  // Vide le champ de texte après ajout
+    function handleSelectPokemon() {
+        const selectedPokemon = pokemonList.find(
+            (pokemon) => pokemon.name.toLowerCase() === inputValue.toLowerCase()
+        );
+        if (selectedPokemon) {
+            navigate(`/pokemon/${selectedPokemon.index}`);
+        }
     }
 
-    // Gère l'événement de survol de l'image
     function handleMouseEnter() {
-        setButtonImage(submitBallHover);  // Change l'image au survol
+        setButtonImage(submitBallHover);  
+    }
+    function handleMouseLeave() {
+        setButtonImage(submitBall);
     }
 
-    // Gère l'événement de sortie du survol
-    function handleMouseLeave() {
-        setButtonImage(submitBall);  // Restaure l'image originale
-    }
+    useEffect(() => {
+        if (inputValue.trim() === "" || pokemonList.find((pokemon) => pokemon.name.toLowerCase() === inputValue.toLowerCase()
+        )) {
+            setFilteredPokemon([]);
+            return;
+        }
+        const results = pokemonList
+            .filter(pokemon => 
+                pokemon.name.toLowerCase().includes(inputValue.toLowerCase())
+            )
+            .slice(0, 5);
+        setFilteredPokemon(results);
+    }, [inputValue])
 
     return (
         <div className="input-div">
@@ -38,13 +55,19 @@ function SearchInput(props) {
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)} 
                         name="todo" 
-                        placeholder="Gotta catch 'em all..." 
+                        placeholder="Gotta catch 'em all..."
+                        list="pokemon-options"
                     />
+                    <datalist id="pokemon-options">
+                        {filteredPokemon.map((pokemon) => (
+                            <option key={pokemon.index} value={pokemon.name} />
+                        ))}
+                    </datalist>
                     <br />
                     <button 
-                        onClick={handleAddTodos} 
-                        onMouseEnter={handleMouseEnter}  // Applique le survol
-                        onMouseLeave={handleMouseLeave}  // Applique la sortie du survol
+                        onClick={handleSelectPokemon} 
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
                     >
                         <img src={buttonImage} alt="Submit" />
                     </button>

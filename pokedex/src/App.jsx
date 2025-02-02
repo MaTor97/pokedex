@@ -1,13 +1,7 @@
-import { useEffect, useState } from "react";
 import './App.css'
-import { BrowserRouter, Routes, Route, createBrowserRouter, RouterProvider, useParams } from "react-router-dom";
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import Layout from "./pages/Layout";
-import Home from "./pages/Home";
-import Pokemon from "./pages/Pokemon"
-import NoPage from "./pages/NoPage.jsx";
-import PokemonList from "./components/PokemonList.jsx";
-import Modal from "./components/Modal.jsx"
-import Display from "./components/Display.jsx";
+
 
 const router = createBrowserRouter([
   {
@@ -40,8 +34,6 @@ const router = createBrowserRouter([
 ])
 
 function App() {
-    // const pokemonList = PokemonList();
-    // console.log("app : " + pokemonList)
     return (
     <RouterProvider
       router={router}

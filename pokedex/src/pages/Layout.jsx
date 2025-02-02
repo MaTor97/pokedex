@@ -1,6 +1,6 @@
-import { Outlet, useNavigate, useLoaderData } from "react-router-dom";
+import { useNavigate, useLoaderData } from "react-router-dom";
 import Input from "../components/Input"
-import Display from "../components/Display"
+
 import { useState, useLayoutEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import shinyImg from '../asset/shiny.png';
@@ -10,24 +10,21 @@ const Layout = () => {
   const pokemonList = useLoaderData();
 
   const navigate = useNavigate();
-  const toLoad = 5;
-   const [display, setDisplay] = useState([])
-   const [row, setRow] = useState(toLoad)
-   const [nextLine, setNextLine] = useState([])
-   const [currentImage, setCurrentImage] = useState({});
- 
-   useLayoutEffect(() => {
-     const asyncLoad = async ()=> {
-      const toDisplay = pokemonList.slice(0, toLoad*row)
-      .map((pokemon) => fetch(pokemon.url).then(response => response.json()))
-       
-     
-       const syncToDisplay = await Promise.all(toDisplay)
-       setDisplay(syncToDisplay)
-   
-       const toNextLine = pokemonList.slice(row*toLoad, row*toLoad + toLoad)
-       .map((pokemon) =>fetch(pokemon.url).then(response => response.json()))
-     
+  const toLoad = 10;
+  const [display, setDisplay] = useState([])
+  const [row, setRow] = useState(toLoad)
+  const [nextLine, setNextLine] = useState([])
+  const [currentImage, setCurrentImage] = useState({}); 
+  useLayoutEffect(() => {
+    const asyncLoad = async ()=> {
+    const toDisplay = pokemonList.slice(0, toLoad*row)
+                                 .map((pokemon) => fetch(pokemon.url)
+                                 .then(response => response.json()))
+    const syncToDisplay = await Promise.all(toDisplay)
+    setDisplay(syncToDisplay)
+    const toNextLine = pokemonList.slice(row*toLoad, row*toLoad + toLoad)
+                                  .map((pokemon) =>fetch(pokemon.url)
+                                  .then(response => response.json()))
      const syncToNextLine = await Promise.all(toNextLine)
      setNextLine(syncToNextLine)
      }
@@ -50,10 +47,8 @@ const Layout = () => {
    },[row])
  
    const fetchData = () => {
-  //   const nextLine = pokemonList.slice( (row * 4) , (row * 4 + 4) )  // get the line to add
-     setDisplay((display) => [...display, ...nextLine]) // add the line in display
+     setDisplay((display) => [...display, ...nextLine]) 
      setRow(row + 1)
- 
      return display;
    }
  
@@ -114,7 +109,7 @@ const Layout = () => {
 
   return (
     <>
-      <Input/>
+      <Input pokemonList={pokemonList}/>
       
       <div className="display">
             <InfiniteScroll
