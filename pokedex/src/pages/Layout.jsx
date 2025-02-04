@@ -48,7 +48,7 @@ const Layout = () => {
      const syncToNextLine = await Promise.all(toNextLine)
      setNextLine(syncToNextLine)
    }
-   if(display.length < 1010)
+   if(display.length < 1000)
       asyncLoad();
    setRow(row + toLoad)
      return display;
