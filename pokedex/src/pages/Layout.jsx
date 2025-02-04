@@ -33,9 +33,10 @@ const Layout = () => {
  
    },[pokemonList])
  
-   useLayoutEffect( () => {    
  
-     setNextLine([])
+   const fetchData = () => {
+    setDisplay((display) => [...display, ...nextLine])
+    setNextLine([])
      const asyncLoad = async ()=> {
        const toNextLine = pokemonList.slice(row*toLoad, row*toLoad + toLoad)
        .map((pokemon) =>fetch(pokemon.url).then(response => response.json()))
@@ -44,11 +45,6 @@ const Layout = () => {
      setNextLine(syncToNextLine)
    }
    asyncLoad();
-   },[row])
- 
-   const fetchData = () => {
-     setDisplay((display) => [...display, ...nextLine]) 
-     setRow(row + 1)
      return display;
    }
  
