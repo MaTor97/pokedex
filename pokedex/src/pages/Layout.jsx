@@ -45,7 +45,7 @@ const Layout = () => {
      const syncToNextLine = await Promise.all(toNextLine)
      setNextLine(syncToNextLine)
    }
-   if(display.length < pokemonList.length)
+   if(display.length < 1010)
       asyncLoad();
    setRow(row + toLoad)
      return display;
