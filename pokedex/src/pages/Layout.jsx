@@ -45,7 +45,8 @@ const Layout = () => {
      const syncToNextLine = await Promise.all(toNextLine)
      setNextLine(syncToNextLine)
    }
-   asyncLoad();
+   if(display.length < pokemonList.length)
+      asyncLoad();
    setRow(row + toLoad)
      return display;
    }
@@ -113,7 +114,7 @@ const Layout = () => {
             <InfiniteScroll
               dataLength={display.length}
               next={fetchData}
-              hasMore={row * 4 < pokemonList.length} // Condition pour arrêter le scroll infini
+              hasMore={display.length < pokemonList.length} // Condition pour arrêter le scroll infini
               loader={<h4>Loading...</h4>}
               endMessage={
                 <p style={{ textAlign: "center" }}>
