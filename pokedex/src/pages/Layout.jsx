@@ -27,6 +27,7 @@ const Layout = () => {
                                   .then(response => response.json()))
      const syncToNextLine = await Promise.all(toNextLine)
      setNextLine(syncToNextLine)
+     setRow(row + toLoad)
      }
   asyncLoad();
        
@@ -45,6 +46,7 @@ const Layout = () => {
      setNextLine(syncToNextLine)
    }
    asyncLoad();
+   setRow(row + toLoad)
      return display;
    }
  
