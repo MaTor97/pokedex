@@ -22,6 +22,12 @@ const Layout = () => {
                                  .then(response => response.json()))
     const syncToDisplay = await Promise.all(toDisplay)
     setDisplay(syncToDisplay)
+    const toNextLine = pokemonList.slice(row*toLoad, row*toLoad + toLoad)
+                                  .map((pokemon) =>fetch(pokemon.url)
+                                  .then(response => response.json()))
+     const syncToNextLine = await Promise.all(toNextLine)
+     setNextLine(syncToNextLine)
+     setRow(row + toLoad)
      }
   asyncLoad();
        
@@ -30,7 +36,7 @@ const Layout = () => {
  
  
    const fetchData = () => {
-    
+    setDisplay((display) => [...display, ...nextLine])
     setNextLine([])
      const asyncLoad = async ()=> {
        const toNextLine = pokemonList.slice(row*toLoad, row*toLoad + toLoad)
@@ -41,7 +47,6 @@ const Layout = () => {
    }
    asyncLoad();
    setRow(row + toLoad)
-   setDisplay((display) => [...display, ...nextLine])
      return display;
    }
  
@@ -108,7 +113,7 @@ const Layout = () => {
             <InfiniteScroll
               dataLength={display.length}
               next={fetchData}
-              hasMore={row * toLoad * 4 <= pokemonList.length} // Condition pour arrêter le scroll infini
+              hasMore={row * toLoad * 4 + row * toLoad <= pokemonList.length} // Condition pour arrêter le scroll infini
               loader={<h4>Loading...</h4>}
               endMessage={
                 <p style={{ textAlign: "center" }}>
