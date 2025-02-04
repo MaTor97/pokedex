@@ -114,7 +114,7 @@ const Layout = () => {
             <InfiniteScroll
               dataLength={display.length}
               next={fetchData}
-              hasMore={display.length < pokemonList.length + toLoad * row} // Condition pour arrêter le scroll infini
+              hasMore={display.length < (pokemonList.length + toLoad * 4)} // Condition pour arrêter le scroll infini
               loader={<h4>Loading...</h4>}
               endMessage={
                 <p style={{ textAlign: "center" }}>
