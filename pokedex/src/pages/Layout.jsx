@@ -39,7 +39,10 @@ const Layout = () => {
     setDisplay((display) => [...display, ...nextLine])
     setNextLine([])
      const asyncLoad = async ()=> {
-       const toNextLine = pokemonList.slice(row*toLoad, row*toLoad + toLoad)
+      const checkMax = row*toLoad + toLoad;
+      if (checkMax > pokemonList.length)
+        checkMax = pokemonList.length - 1
+       const toNextLine = pokemonList.slice(row*toLoad, checkMax)
        .map((pokemon) =>fetch(pokemon.url).then(response => response.json()))
      
      const syncToNextLine = await Promise.all(toNextLine)
